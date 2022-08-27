@@ -13,6 +13,15 @@ from pyrogram.types import Message
 LOGGER = getLogger(__name__)
 getLogger("pyrogram").setLevel(ERROR)
 IMAGE_SUFFIXES = ("JPG", "JPX", "PNG", "CR2", "TIF", "BMP", "JXR", "PSD", "ICO", "HEIC", "JPEG")
+
+def DownLoadFile(url):
+    file_name = str(time()) + ".jpg"
+    r = requests.get(url, allow_redirects=True, stream=True)
+    with open(file_name, 'wb') as fd:
+        for chunk in r.iter_content(chunk_size=128):
+            fd.write(chunk)
+    return file_name
+
 class TgUploader:
 
     def __init__(self, name=None, path=None, size=0, listener=None):
