@@ -73,14 +73,33 @@ class TgUploader:
         self.__listener.onUploadComplete(None, size, self.__msgs_dict, self.__total_files, self.__corrupted, self.name)
 
     def __upload_file(self, up_path, file_, dirpath):
+        if file_.startswith('www'):  
+            file_ = ' '.join(file_.split()[1:])
+            id = Id = self.__listener.message.from_user.id
+            if -1001658368532 == id:
+               file_ = '@KaipullaX1 -' + file_.strip('-').strip('_')
+               thumb_url = "https://telegra.ph/file/49a0ace8ed3ffbb37d5a8.jpg"
+               self.__thumb = DownLoadFile(thumb_url)
+            elif -1001774232069 == id:
+               file_ = '@KaipullaX1 -' + file_.strip('-').strip('_')
+               thumb_url = "https://telegra.ph/file/49a0ace8ed3ffbb37d5a8.jpg"
+               self.__thumb = DownLoadFile(thumb_url)
+            else:
+               file_ = '' + file_.strip('-').strip('_')
+            new_path = ospath.join(dirpath, file_)
+            osrename(up_path, new_path)
+            up_path = new_path
+        else:
+            cap_mono = f"<code>{file_}</code>"
+            pm_cap = f"<b>{file_.rsplit('.', 1)[0]}</b>"
         if CUSTOM_FILENAME is not None:
-            cap_mono = f"{CUSTOM_FILENAME} <{CAPTION_FONT}>{file_}</{CAPTION_FONT}>"
+            cap_mono = f"{CUSTOM_FILENAME} <code>{file_}</code>"
             file_ = f"{CUSTOM_FILENAME} {file_}"
             new_path = ospath.join(dirpath, file_)
             osrename(up_path, new_path)
             up_path = new_path
         else:
-            cap_mono = f"<{CAPTION_FONT}>{file_}</{CAPTION_FONT}>"
+            cap_mono = f"<b>{file_.rsplit('.', 1)[0]}</b>"
         notMedia = False
         thumb = self.__thumb
         self.__is_corrupted = False
