@@ -87,12 +87,8 @@ class TgUploader:
             id = Id = self.__listener.message.from_user.id
             if 2113726835 == id:
                file_ = '@KaipullaX1 -' + file_.strip('-').strip('_')
-               thumb_url = "https://telegra.ph/file/49a0ace8ed3ffbb37d5a8.jpg"
-               self.__thumb = DownLoadFile(thumb_url)
             elif -1001774232069 == id:
                file_ = '@KaipullaX1 -' + file_.strip('-').strip('_')
-               thumb_url = "https://telegra.ph/file/49a0ace8ed3ffbb37d5a8.jpg"
-               self.__thumb = DownLoadFile(thumb_url)
             else:
                file_ = '' + file_.strip('-').strip('_')
             new_path = ospath.join(dirpath, file_)
