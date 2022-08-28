@@ -34,6 +34,8 @@ LOGGER = getLogger(__name__)
 def getConfig(name: str):
     return environ[name]
 
+PRE_DICT = {}
+
 CONFIG_FILE_URL = environ.get('CONFIG_FILE_URL')
 
 try:
