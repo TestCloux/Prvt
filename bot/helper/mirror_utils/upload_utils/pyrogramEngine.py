@@ -5,7 +5,7 @@ from pyrogram.errors import FloodWait, RPCError
 from PIL import Image
 from threading import RLock
 from bot import AS_DOCUMENT, AS_DOC_USERS, AS_MEDIA_USERS, CUSTOM_FILENAME, \
-                 EXTENSION_FILTER, app, LEECH_LOG, BOT_PM, tgBotMaxFileSize, premium_session, CAPTION_FONT
+                 EXTENSION_FILTER, app, LEECH_LOG, BOT_PM, tgBotMaxFileSize, premium_session, CAPTION_FONT, PRE_DICT
 from bot.helper.ext_utils.fs_utils import take_ss, get_media_info, get_media_streams, get_path_size, clean_unwanted
 from bot.helper.ext_utils.bot_utils import get_readable_file_size
 from pyrogram.types import Message
@@ -82,21 +82,17 @@ class TgUploader:
         self.__listener.onUploadComplete(None, size, self.__msgs_dict, self.__total_files, self.__corrupted, self.name)
 
     def __upload_file(self, up_path, file_, dirpath):
+        prefix = PRE_DICT.get(self.__listener.message.from_user.id, "")
+        PRENAME_X = prefix
         if file_.startswith('www'):  
             file_ = ' '.join(file_.split()[1:])
-            id = Id = self.__listener.message.from_user.id
-            if 2113726835 == id:
-               file_ = '@KaipullaX1 -' + file_.strip('-').strip('_')
-            elif -1001774232069 == id:
-               file_ = '@KaipullaX1 -' + file_.strip('-').strip('_')
-            else:
-               file_ = '' + file_.strip('-').strip('_')
+            file_ = f"{PRENAME_X}"+ file_.strip('-').strip('_')
             new_path = ospath.join(dirpath, file_)
             osrename(up_path, new_path)
             up_path = new_path
         else:
+            up_path = up_path
             cap_mono = f"<code>{file_}</code>"
-            pm_cap = f"<b>{file_.rsplit('.', 1)[0]}</b>"
         if CUSTOM_FILENAME is not None:
             cap_mono = f"{CUSTOM_FILENAME} <code>{file_}</code>"
             file_ = f"{CUSTOM_FILENAME} {file_}"
