@@ -37,7 +37,7 @@ def _mirror_leech(bot, message, isZip=False, extract=False, isQbit=False, isLeec
         send = bot.sendMessage(from_user.id, text=msg1, )
         send.delete()
       except Exception as e:
-        LOGGER(__name__).warning(e)
+        LOGGER.info.warning(e)
         bot_d = bot.get_me()
         b_uname = bot_d.username
         uname = f'<a href="tg://user?id={from_user.id}">{from_user.first_name}</a>'
@@ -49,7 +49,7 @@ def _mirror_leech(bot, message, isZip=False, extract=False, isQbit=False, isLeec
         return
     try:
         user = bot.get_chat_member("-1001237102795", from_user.id)
-        LOGGER(__name__).error(user.status)
+        LOGGER.info.error(user.status)
         if user.status not in ('member','creator','administrator'):
             buttons = ButtonMaker()
             buttons.buildbutton("Join Updates Channel", "https://t.me/KaipullaBots")
