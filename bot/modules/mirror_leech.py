@@ -40,7 +40,7 @@ def _mirror_leech(bot, message, isZip=False, extract=False, isQbit=False, isLeec
         LOGGER(__name__).warning(e)
         bot_d = bot.get_me()
         b_uname = bot_d.username
-        uname = f'<a href="tg://user?id={from_user.id}">{from_user.first_name}</a>'
+        uname = f"<a href="tg://user?id={from_user.id}">{from_user.first_name}</a>"
         buttons = ButtonMaker()
         buttons.buildbutton("Start Me", f"http://t.me/{b_uname}")
         buttons.buildbutton("Updates Channel", "http://t.me/KristyCloud")
@@ -57,7 +57,7 @@ def _mirror_leech(bot, message, isZip=False, extract=False, isQbit=False, isLeec
             sendMarkup(f"<b>⚠️You Have Not Joined My Updates Channel</b>\n\n<b>Join Immediately to use the Bot.</b>", bot, update, reply_markup, chat_id=chat_id)
             return reply_message
            
-    uname = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>'
+    uname = f"<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>"
     total_task = len(download_dict)
     user_id = message.from_user.id
     if user_id != OWNER_ID and user_id not in SUDO_USERS:
