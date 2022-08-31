@@ -55,7 +55,7 @@ def _mirror_leech(bot, message, isZip=False, extract=False, isQbit=False, isLeec
             buttons.buildbutton("Join Updates Channel", "https://t.me/KaipullaBots")
             reply_markup = InlineKeyboardMarkup(buttons.build_menu(1))
             sendMarkup(f"<b>⚠️You Have Not Joined My Updates Channel</b>\n\n<b>Join Immediately to use the Bot.</b>", bot, update, reply_markup, chat_id=chat_id)
-            return reply_message
+            return
            
     uname = f"<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>"
     total_task = len(download_dict)
