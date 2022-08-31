@@ -31,24 +31,6 @@ from .listener import MirrorLeechListener
 def _mirror_leech(bot, message, isZip=False, extract=False, isQbit=False, isLeech=False):
     buttons = ButtonMaker()
 	
-    if FSUB:
-        try:
-            user = bot.get_chat_member(f"{FSUB_CHANNEL_ID}", message.from_user.id)
-            LOGGER.info(user.status)
-            if user.status not in ("member", "creator", "administrator", "supergroup"):
-                if message.from_user.username:
-                    uname = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.username}</a>'
-                else:
-                    uname = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>'
-                buttons = ButtonMaker()
-                chat_u = CHANNEL_USERNAME.replace("@", "")
-                buttons.buildbutton("Join Meh. Updates Channel", f"https://t.me/{chat_u}")
-                help_msg = f"<b>Dᴇᴀʀ {uname},\nYᴏᴜ Nᴇᴇᴅ Tᴏ Jᴏɪɴ Mʏ Cʜᴀɴɴᴇʟ To Usᴇ Bᴏᴛ \n\nCʟɪᴄᴋ Oɴ Tʜᴇ Bᴇʟᴏᴡ Bᴜᴛᴛᴏɴ Tᴏ Jᴏɪɴ Mʏ Cʜᴀɴɴᴇʟ.</b>"
-                reply_message = sendMarkup(help_msg, bot, message, InlineKeyboardMarkup(buttons.build_menu(2)))
-                Thread(target=auto_delete_message, args=(bot, message, reply_message)).start()
-                return reply_message
-        except Exception:
-            pass
     if BOT_PM:
       try:
         msg1 = f'Added your Requested Link to Downloads'
