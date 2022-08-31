@@ -32,32 +32,41 @@ def _mirror_leech(bot, message, isZip=False, extract=False, isQbit=False, isLeec
     buttons = ButtonMaker()
 	
     if BOT_PM:
-      try:
-        msg1 = f'Added your Requested Link to Downloads'
-        send = bot.sendMessage(from_user.id, text=msg1, )
-        send.delete()
-      except Exception as e:
-        LOGGER.info
-        bot_d = bot.get_me()
-        b_uname = bot_d.username
-        uname = f'<a href="tg://user?id={from_user.id}">{from_user.first_name}</a>'
-        buttons = ButtonMaker()
-        buttons.buildbutton("Start Me", f"http://t.me/{b_uname}")
-        buttons.buildbutton("Updates Channel", "http://t.me/KristyCloud")
-        reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
-        message = sendMarkup(f"Hey Bro {uname}👋,\n\n<b>I Found That You Haven't Started Me In PM Yet 😶</b>\n\nFrom Now on i Will links in PM Only 😇", bot, update, reply_markup=reply_markup, chat_id=chat_id)     
-        return
-    try:
-        user = bot.get_chat_member("-1001237102795", from_user.id)
-        LOGGER.info.error(user.status)
-        if user.status not in ('member','creator','administrator'):
-            buttons = ButtonMaker()
-            buttons.buildbutton("Join Updates Channel", "https://t.me/KaipullaBots")
-            reply_markup = InlineKeyboardMarkup(buttons.build_menu(1))
-            sendMarkup(f"<b>⚠️You Have Not Joined My Updates Channel</b>\n\n<b>Join Immediately to use the Bot.</b>", bot, update, reply_markup, chat_id=chat_id)
-            return
-    except:
-        pass
+      tif FSUB:
+        try:
+            user = bot.get_chat_member(f"{FSUB_CHANNEL_ID}", message.from_user.id)
+            LOGGER.info(user.status)
+            if user.status not in ("member", "creator", "administrator", "supergroup"):
+                if message.from_user.username:
+                    uname = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.username}</a>'
+                else:
+                    uname = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>'
+                buttons = ButtonMaker()
+                chat_u = CHANNEL_USERNAME.replace("@", "")
+                buttons.buildbutton("Join Meh. Updates Channel", f"https://t.me/{chat_u}")
+                help_msg = f"<b>Dᴇᴀʀ {uname},\nYᴏᴜ Nᴇᴇᴅ Tᴏ Jᴏɪɴ Mʏ Cʜᴀɴɴᴇʟ To Usᴇ Bᴏᴛ \n\nCʟɪᴄᴋ Oɴ Tʜᴇ Bᴇʟᴏᴡ Bᴜᴛᴛᴏɴ Tᴏ Jᴏɪɴ Mʏ Cʜᴀɴɴᴇʟ.</b>"
+                reply_message = sendMarkup(help_msg, bot, message, InlineKeyboardMarkup(buttons.build_menu(2)))
+                Thread(target=auto_delete_message, args=(bot, message, reply_message)).start()
+                return reply_message
+        except Exception:
+            pass
+    if BOT_PM and message.chat.type != 'private':
+        try:
+            msg1 = f'Added your Requested link to Download\n'
+            send = bot.sendMessage(message.from_user.id, text=msg1)
+            send.delete()
+        except Exception as e:
+            LOGGER.warning(e)
+            bot_d = bot.get_me()
+            b_uname = bot_d.username
+            uname = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>'
+            botstart = f"http://t.me/{b_uname}"
+            buttons.buildbutton("Click Here to Start Me", f"{botstart}")
+            startwarn = f"<b>Dear {uname},\n\n<b>I found that you haven't started me in PM (Private Chat) yet.</b>\n\n" \
+                        f"From now on i will give link and leeched files in PM and log channel only</b>"
+            reply_message = sendMarkup(startwarn, bot, message, InlineKeyboardMarkup(buttons.build_menu(2)))
+            Thread(target=auto_delete_message, args=(bot, message, reply_message)).start()
+            return reply_message
            
     uname = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>'
     total_task = len(download_dict)
