@@ -37,7 +37,7 @@ def _mirror_leech(bot, message, isZip=False, extract=False, isQbit=False, isLeec
         send = bot.sendMessage(from_user.id, text=msg1, )
         send.delete()
       except Exception as e:
-        LOGGER.info.warning(e)
+        LOGGER.info
         bot_d = bot.get_me()
         b_uname = bot_d.username
         uname = f'<a href="tg://user?id={from_user.id}">{from_user.first_name}</a>'
