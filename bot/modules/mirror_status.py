@@ -9,7 +9,6 @@ from bot.helper.ext_utils.bot_utils import get_readable_file_size, get_readable_
 from bot.helper.telegram_helper.filters import CustomFilters
 from bot.helper.telegram_helper.bot_commands import BotCommands
 
-IMAGE_START = f"https://telegra.ph/file/2071e1c1ecf62bfd1fe79.jpg"
 
 def mirror_status(update, context):
     with download_dict_lock:
@@ -20,7 +19,7 @@ def mirror_status(update, context):
         message = 'No Active Downloads !\n___________________________'
         message += f"\n<b>CPU:</b> {cpu_percent()}% | <b>FREE:</b> {free}" \
                    f"\n<b>RAM:</b> {virtual_memory().percent}% | <b>UPTIME:</b> {currentTime}"
-        update.effective_message.reply_photo(IMAGE_START, message, context.bot, update.message)
+        reply_message = sendMessage(message, context.bot, update.message)
         Thread(target=auto_delete_message, args=(context.bot, update.message, reply_message)).start()
     else:
         index = update.effective_chat.id
@@ -36,7 +35,7 @@ def mirror_status(update, context):
                 pass
             finally:
                 Interval.append(setInterval(DOWNLOAD_STATUS_UPDATE_INTERVAL, update_all_messages))
-        update.effective_message.reply_photo(IMAGE_START, update.message, context.bot)
+        sendStatusMessage(update.message, context.bot)
         deleteMessage(context.bot, update.message)
 
 def status_pages(update, context):
